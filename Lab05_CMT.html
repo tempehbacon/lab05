@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leaflet Circle/-Marker</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Mono|Muli">
+
+  <style>
+
+    html, body{  
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+
+    .pageHeader {
+      background-color: black;
+      height: 20px;
+      width: 100%;
+      padding-top: 5px;
+      padding-bottom: 55px;
+      color: white;
+      text-align: center;
+    }
+    
+    #map-div {
+      height: 880px;
+      width: 100%;
+    }
+
+    * {
+      font-family: "Muli", sans-serif;
+    }
+
+    h1 {
+      font-family: "Space Mono", monospace;
+      font-size: 24px;
+    }
+
+    /*Legend specific*/
+    .legend {
+      padding: 10px 10px;
+      font: 12px "Space Mono", monospace;
+      background: white;
+      background: rgba(255, 255, 255, 0.8);
+      line-height: 20px;
+      color: #555;
+    }
+    .legend h4 {
+      text-align: left;
+      font-family: "Space Mono", monospace;
+      font-size: 14px;
+      margin: 2px 2px 8px;
+      color: black;
+    }
+
+    .legend span {
+      position: relative;
+      bottom: 3px;
+    }
+
+    .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin: 0 8px 0 0;
+      opacity: 0.7;
+    }
+
+    .legend i.icon {
+      background-size: 18px;
+    }
+
+  </style>
+  
+</head>
+
+<body>
+
+  <!DOCTYPE html>
+
+<html>
+
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="//unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  </head>
+
+  <body>
+      <div class="pageHeader">
+        <h1>Major Earthquakes in the New York Area (1970-2024)</h2>
+      </div>
+      <div id="map-div"></div>
+  </body>
+
+</html>
+
+  <script>
+    var map = L.map('map-div').setView([42.5, -75.25], 7);
+    var basemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+	    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	    subdomains: 'abcd',
+	    maxZoom: 15
+    }); basemap.addTo(map);
+
+    //Standard Marker
+
+    L.marker([40.768500, -73.964700]).addTo(map)
+      .bindPopup("Hunter College, New York, NY")
+      .openPopup();
+
+    //CircleMarker
+
+    var circleMarkerData = [
+    {
+        color: '#FF0000',
+        size: 53,
+        transparency: 0.5,
+        latlng: [44.44,-73.68],
+        magnitude: 5.3,
+        date: "April 20, 2002",
+        region: "Au Sable Forks, NY"
+      },
+      {
+        color: '#FF0000',
+        size: 51,
+        transparency: 0.45,
+        latlng: [43.97,-74.17],
+        magnitude: 5.1,
+        date: "October 7, 1983",
+        region: "Newcomb, NY"
+      },
+      {
+        color: '#FF5349',
+        size: 48,
+        transparency: 0.4,
+        latlng: [40.62,-74.77],
+        magnitude: 4.8,
+        date: "April 5, 2024",
+        region: "Whitehouse Station, NJ"
+      },
+      {
+        color: '#FF5349',
+        size: 47,
+        transparency: 0.35,
+        latlng: [43.63,-70.62],
+        magnitude: 4.7,
+        date: "October 16, 2012",
+        region: "Hollis Center, ME"
+      },
+      {
+        color: '#FF5349',
+        size: 46,
+        transparency: 0.3,
+        latlng: [40.33,-76.01],
+        magnitude: 4.6,
+        date: "January 16, 1994",
+        region: "Sinking Spring, PA"
+      },
+      {
+        color: '#FF5349',
+        size: 45,
+        transparency: 0.25,
+        latlng: [43.49,-71.58],
+        magnitude: 4.5,
+        date: "January 19, 1982",
+        region: "Sanbornton, NH"
+      },
+      {
+        color: '#FFAE42',
+        size: 45,
+        transparency: 0.25,
+        latlng: [41.51,-80.37],
+        magnitude: 4.5,
+        date: "September 25, 1998",
+        region: "Adamsville, PA"
+      },
+      {
+        color: '#FFAE42',
+        size: 42,
+        transparency: 0.2,
+        latlng: [44.89,-73.65],
+        magnitude: 4.2,
+        date: "June 9, 1975",
+        region: "Altona, NY"
+      },
+      {
+        color: '#FFAE42',
+        size: 42,
+        transparency: 0.2,
+        latlng: [44.50,-70.41],
+        magnitude: 4.2,
+        date: "May 29, 1983",
+        region: "Peru, ME"
+      },
+      {
+        color: '#FFAE42',
+        size: 42,
+        transparency: 0.2,
+        latlng: [39.94,-76.35],
+        magnitude: 4.2,
+        date: "April 23, 1984",
+        region: "Conestoga, PA"
+      }
+    ];
+
+    function createCircleMarkers(map) {
+      circleMarkerData.forEach(item => {
+        L.circleMarker(item.latlng, {
+          radius: item.size,
+          fillColor: item.color,
+          color: item.color,
+          weight: .75,
+          opacity: 1,
+          magnitude: item.magnitude,
+          region: item.region,
+          date: item.date,
+          fillOpacity: item.transparency
+        }).bindPopup("Magnitude "+item.magnitude+" in "+item.region+", "+item.date).addTo(map);
+      });
+    } createCircleMarkers(map);
+
+    //Custom Icon
+
+    var EQicon = L.icon({
+      iconUrl: `https://raw.githubusercontent.com/tempehbacon/lab05/eb49d54f64d2774848c3471332935fed3582aaee/icons/FF0000.svg`,
+      iconSize: [31, 46]
+    });
+
+    var AuSablePopup = L.popup().setContent('<a href="https://www.maine.gov/dacf/mgs/hazards/earthquakes/quake-4-20-02.htm" target="_blank">April 20, 2002 Earthquake in Eastern New York</a>');
+    var AuSableMarker = L.marker([44.44,-73.68], {
+      icon: EQicon
+    }).bindPopup(AuSablePopup).addTo(map);
+
+    var NewcombPopup = L.popup().setContent('<a href="https://www.nytimes.com/1983/10/08/nyregion/tremors-from-adirondack-quake-shake-northeast-us-and-canada.html" target="_blank">Tremors from Adirondack Quake Shake Northeast U.S. and Canada</a>');
+    var NewcombMarker = L.marker([43.97,-74.17], {
+      icon: EQicon
+    }).bindPopup(NewcombPopup).addTo(map);
+
+    var WHSPopup = L.popup().setContent('<a href="https://www.nytimes.com/interactive/2024/04/05/nyregion/earthquake-new-york-new-jersey.html" target="_blank">4.8-Magnitude Earthquake Strikes New Jersey</a>');
+    var WHSMarker = L.marker([40.62,-74.77], {
+      icon: EQicon
+    }).bindPopup(WHSPopup).addTo(map);
+
+    //Legend
+    var legend = L.control({ position:"bottomleft"});
+
+    legend.onAdd = function(map) {
+      var div = L.DomUtil.create("div", "legend");
+      div.innerHTML += "<h4>Legend</h4>";
+      div.innerHTML += '<i class="icon" style="background-image: url(https://raw.githubusercontent.com/tempehbacon/lab05/eb49d54f64d2774848c3471332935fed3582aaee/icons/FF0000.svg);background-repeat: no-repeat;"></i><span>Significant Earthquake</span><br>';
+      return div;
+    }; legend.addTo(map);
+
+  </script>
+
+</body>
+
+</html>
